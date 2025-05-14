@@ -1,64 +1,36 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.4.5'
-	id 'io.spring.dependency-management' version '1.1.7'
-	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+	id 'org.springframework.boot' version '3.2.5'
+	id 'io.spring.dependency-management' version '1.1.4'
 }
 
-group = 'com.umcspring'
+group = 'com.example'
 version = '0.0.1-SNAPSHOT'
-
-java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
-	}
-}
+sourceCompatibility = '17'
 
 repositories {
 	mavenCentral()
 }
 
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-	querydsl.extendsFrom compileClasspath
-}
-
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	runtimeOnly 'com.mysql:mysql-connector-j'
+	implementation 'org.springframework.boot:spring-boot-starter-validation' // spring 내부 설정용
+	implementation 'jakarta.validation:jakarta.validation-api:3.0.2'         // API 명시
+	implementation 'org.hibernate.validator:hibernate-validator:8.0.1.Final' // 구현체
 
-	// Lombok
+	implementation "com.querydsl:querydsl-jpa:5.0.0:jakarta"
+	annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
+	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
 	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
-
-	// QueryDSL
-	implementation 'com.querydsl:querydsl-jpa:5.0.0'
-	annotationProcessor 'com.querydsl:querydsl-apt:5.0.0:jpa'
-	annotationProcessor 'jakarta.annotation:jakarta.annotation-api:2.1.1'
-	annotationProcessor 'jakarta.persistence:jakarta.persistence-api:3.1.0'
-
-
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-// QueryDSL 설정
-def queryDslSrcDir = 'build/generated/querydsl/'
 
-tasks.withType(JavaCompile).configureEach {
-	options.getGeneratedSourceOutputDirectory().set(file(queryDslSrcDir))
-}
-
-sourceSets {
-	main.java.srcDirs += [queryDslSrcDir]
-}
-
-clean {
-	delete file(queryDslSrcDir)
-}
-
-tasks.named('test') {
+test {
 	useJUnitPlatform()
 }

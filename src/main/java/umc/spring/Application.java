@@ -21,6 +21,7 @@ public class Application {
 		SpringApplication.run(Application.class, args);
 	}
 
+	/*
 	@Bean
 	public CommandLineRunner run(ApplicationContext context) {
 		return args -> {
@@ -37,5 +38,5 @@ public class Application {
 
 			storeService.findStoresByNameAndScore(name, score)
 					.forEach(System.out::println);
-		};
-	}}
+		};*/
+	}
