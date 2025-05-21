@@ -21,6 +21,8 @@ public class Store extends BaseEntity {
     @Column(columnDefinition = "VARCHAR(50) DEFAULT 'ACTIVE'")
     private String name;
 
+    private String description;
+
     private LocalTime openTime;
     private LocalTime closeTime;
 
@@ -36,9 +38,9 @@ public class Store extends BaseEntity {
     private Double latitude;
     private Double longitude;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    private FoodCategory foodCategory;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "category_id") // FK로 연결
+    private FoodCategory category;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id")

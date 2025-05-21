@@ -11,54 +11,50 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QmatchMissions is a Querydsl query type for matchMissions
+ * QmatchCategory is a Querydsl query type for matchCategory
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QmatchMissions extends EntityPathBase<matchMissions> {
+public class QmatchCategory extends EntityPathBase<matchCategory> {
 
-    private static final long serialVersionUID = -1063354592L;
+    private static final long serialVersionUID = 193956791L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QmatchMissions matchMissions = new QmatchMissions("matchMissions");
+    public static final QmatchCategory matchCategory = new QmatchCategory("matchCategory");
 
     public final umc.spring.domain.QBaseEntity _super = new umc.spring.domain.QBaseEntity(this);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
-    public final DatePath<java.time.LocalDate> deadline = createDate("deadline", java.time.LocalDate.class);
+    public final umc.spring.domain.QFoodCategory foodCategory;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
-
-    public final umc.spring.domain.QMissions missions;
-
-    public final EnumPath<umc.spring.domain.enums.MissionStatus> missionStatus = createEnum("missionStatus", umc.spring.domain.enums.MissionStatus.class);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
 
     public final umc.spring.domain.QUser user;
 
-    public QmatchMissions(String variable) {
-        this(matchMissions.class, forVariable(variable), INITS);
+    public QmatchCategory(String variable) {
+        this(matchCategory.class, forVariable(variable), INITS);
     }
 
-    public QmatchMissions(Path<? extends matchMissions> path) {
+    public QmatchCategory(Path<? extends matchCategory> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
-    public QmatchMissions(PathMetadata metadata) {
+    public QmatchCategory(PathMetadata metadata) {
         this(metadata, PathInits.getFor(metadata, INITS));
     }
 
-    public QmatchMissions(PathMetadata metadata, PathInits inits) {
-        this(matchMissions.class, metadata, inits);
+    public QmatchCategory(PathMetadata metadata, PathInits inits) {
+        this(matchCategory.class, metadata, inits);
     }
 
-    public QmatchMissions(Class<? extends matchMissions> type, PathMetadata metadata, PathInits inits) {
+    public QmatchCategory(Class<? extends matchCategory> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.missions = inits.isInitialized("missions") ? new umc.spring.domain.QMissions(forProperty("missions"), inits.get("missions")) : null;
+        this.foodCategory = inits.isInitialized("foodCategory") ? new umc.spring.domain.QFoodCategory(forProperty("foodCategory")) : null;
         this.user = inits.isInitialized("user") ? new umc.spring.domain.QUser(forProperty("user"), inits.get("user")) : null;
     }
 

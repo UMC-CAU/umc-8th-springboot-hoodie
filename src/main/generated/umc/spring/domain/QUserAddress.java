@@ -7,7 +7,6 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
-import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -17,8 +16,6 @@ import com.querydsl.core.types.dsl.PathInits;
 public class QUserAddress extends EntityPathBase<UserAddress> {
 
     private static final long serialVersionUID = -1127949955L;
-
-    private static final PathInits INITS = PathInits.DIRECT2;
 
     public static final QUserAddress userAddress = new QUserAddress("userAddress");
 
@@ -34,27 +31,16 @@ public class QUserAddress extends EntityPathBase<UserAddress> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
 
-    public final QUser user;
-
     public QUserAddress(String variable) {
-        this(UserAddress.class, forVariable(variable), INITS);
+        super(UserAddress.class, forVariable(variable));
     }
 
     public QUserAddress(Path<? extends UserAddress> path) {
-        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
+        super(path.getType(), path.getMetadata());
     }
 
     public QUserAddress(PathMetadata metadata) {
-        this(metadata, PathInits.getFor(metadata, INITS));
-    }
-
-    public QUserAddress(PathMetadata metadata, PathInits inits) {
-        this(UserAddress.class, metadata, inits);
-    }
-
-    public QUserAddress(Class<? extends UserAddress> type, PathMetadata metadata, PathInits inits) {
-        super(type, metadata, inits);
-        this.user = inits.isInitialized("user") ? new QUser(forProperty("user")) : null;
+        super(UserAddress.class, metadata);
     }
 
 }

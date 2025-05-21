@@ -26,12 +26,14 @@ public class QStore extends EntityPathBase<Store> {
 
     public final StringPath address = createString("address");
 
+    public final QFoodCategory category;
+
     public final TimePath<java.time.LocalTime> closeTime = createTime("closeTime", java.time.LocalTime.class);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
-    public final QFoodCategory foodCategory;
+    public final StringPath description = createString("description");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
@@ -72,7 +74,7 @@ public class QStore extends EntityPathBase<Store> {
 
     public QStore(Class<? extends Store> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.foodCategory = inits.isInitialized("foodCategory") ? new QFoodCategory(forProperty("foodCategory")) : null;
+        this.category = inits.isInitialized("category") ? new QFoodCategory(forProperty("category")) : null;
         this.storeLocation = inits.isInitialized("storeLocation") ? new QStoreLocation(forProperty("storeLocation")) : null;
     }
 
