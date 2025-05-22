@@ -28,10 +28,9 @@ public class matchCategory extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "FoodCategory_id")
     private FoodCategory foodCategory;
-
     public void setUser (User user){
         if(this.user != null)
-            user.getMatchCategoryList().remove(this);
+            this.user.getMatchCategoryList().remove(this);
         this.user = user;
         user.getMatchCategoryList().add(this);
     }

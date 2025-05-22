@@ -1,5 +1,6 @@
 package umc.spring.web.dto;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -11,8 +12,17 @@ import java.util.List;
 @Getter
 public class ReviewRequestDTO {
 
-    private Long userId;
-    private Long storeId;
-    private Integer score;
-    private String content;
+    @Getter
+    public static class AddDTO{
+        @NotNull
+        Long userId;
+
+        @NotNull
+        Long storeId;
+
+        @Min(0)
+        Integer score;
+
+        String content;
+    }
 }
