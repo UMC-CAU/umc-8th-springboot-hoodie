@@ -116,4 +116,11 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
                 request
         );
     }
+    @ExceptionHandler(PageValidationException.class)
+    public ResponseEntity<ApiResponse<?>> handlePageValidationException(PageValidationException e) {
+        return ResponseEntity.badRequest().body(
+                ApiResponse.onFailure("PAGE_VALIDATION_ERROR", e.getMessage(), null)
+        );
+    }
+
 }

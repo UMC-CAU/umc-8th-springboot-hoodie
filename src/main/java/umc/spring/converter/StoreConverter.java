@@ -1,15 +1,17 @@
 package umc.spring.converter;
 
-import umc.spring.domain.FoodCategory;
-import umc.spring.domain.Store;
-import umc.spring.domain.StoreLocation;
+import org.springframework.data.domain.Page;
+import umc.spring.domain.*;
 import umc.spring.domain.enums.StoreStatus;
+import umc.spring.web.dto.ReviewResponseDTO;
 import umc.spring.web.dto.StoreRequestDTO;
 import umc.spring.web.dto.StoreResponseDTO;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class StoreConverter {
 
@@ -51,6 +53,52 @@ public class StoreConverter {
                 .longitude(store.getLongitude())
                 .address(store.getAddress())
                 .createdAt(LocalDateTime.now())
+                .build();
+    }
+
+    public static StoreResponseDTO.ReviewPreViewDTO reviewPreViewDTO(ReviewPost review){
+        return StoreResponseDTO.ReviewPreViewDTO.builder()
+                .ownerNickname(review.getUser().getName())
+                .score(Float.valueOf(review.getScore()))
+                .createdAt(review.getCreatedAt().toLocalDate())
+                .body(review.getContent())
+                .build();
+    }
+    public static StoreResponseDTO.ReviewPreViewListDTO reviewPreViewListDTO(Page<ReviewPost> reviewList){
+
+        List<StoreResponseDTO.ReviewPreViewDTO> reviewPreViewDTOList = reviewList.stream()
+                .map(StoreConverter::reviewPreViewDTO).collect(Collectors.toList());
+
+        return StoreResponseDTO.ReviewPreViewListDTO.builder()
+                .isLast(reviewList.isLast())
+                .isFirst(reviewList.isFirst())
+                .totalPage(reviewList.getTotalPages())
+                .totalElements(reviewList.getTotalElements())
+                .listSize(reviewPreViewDTOList.size())
+                .reviewList(reviewPreViewDTOList)
+                .build();
+    }
+
+    public static StoreResponseDTO.MissionViewDTO missionViewDTO(Missions missions){
+        return StoreResponseDTO.MissionViewDTO.builder()
+                .MissionId(missions.getId())
+                .point(missions.getPoint())
+                .content(missions.getContent())
+                .missionSpec(missions.getMission_spec())
+                .build();
+    }
+
+    public static StoreResponseDTO.MissionViewListDTO missionViewListDTO(Page<Missions> missionList){
+        List<StoreResponseDTO.MissionViewDTO> missionViewDTOList = missionList.stream()
+                .map(StoreConverter::missionViewDTO).collect(Collectors.toList());
+
+        return StoreResponseDTO.MissionViewListDTO.builder()
+                .isLast(missionList.isLast())
+                .isFirst(missionList.isFirst())
+                .totalPage(missionList.getTotalPages())
+                .totalElements(missionList.getTotalElements())
+                .listSize(missionViewDTOList.size())
+                .missionList(missionViewDTOList)
                 .build();
     }
 

@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class UserResponseDTO {
 
@@ -18,4 +19,30 @@ public class UserResponseDTO {
         Long memberId;
         LocalDateTime createdAt;
     }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class OngoingMissionViewDTO{
+        Long MissionId;
+        String content;
+        int point;
+        String missionSpec;
+    }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class OngoingMissionViewListDTO {
+        List<UserResponseDTO.OngoingMissionViewDTO> OngoingMissionList;
+        Integer listSize;
+        Integer totalPage;
+        Long totalElements;
+        Boolean isFirst;
+        Boolean isLast;
+    }
+
+
 }
