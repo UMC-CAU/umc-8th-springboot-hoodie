@@ -19,6 +19,7 @@ public enum ErrorStatus implements BaseErrorCode {
     TEMP_EXCEPTION(HttpStatus.BAD_REQUEST,"TEMP4001","이거는 테스트"),
     FOOD_CATEGORY_NOT_FOUND(HttpStatus.BAD_REQUEST,"COMMON400","찾을수없는 카테고리입니다" ),
     LOCATION_NOT_FOUND(HttpStatus.BAD_REQUEST,"COMMON400","찾을수없는 지역입니다"),
+    PAGE_INVALID(HttpStatus.BAD_REQUEST,"COMMON400","페이지 번호는 1이상이어야 합니다."),
 
     USER_NOT_FOUND(HttpStatus.BAD_REQUEST, "MEMBER4001", "사용자가 없습니다."),
     STORE_NOT_FOUND(HttpStatus.BAD_REQUEST, "MEMBER4001", "가게가 없습니다."),

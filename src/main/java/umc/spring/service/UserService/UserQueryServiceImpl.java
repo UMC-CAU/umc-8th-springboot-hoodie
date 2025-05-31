@@ -32,7 +32,7 @@ public class UserQueryServiceImpl implements UserQueryService{
                 .orElseThrow(() -> new UserHandler(ErrorStatus.USER_NOT_FOUND));
 
         Page<matchMissions> matchMissionsPage
-                = matchMissionRepository.findAllByUserAndMissionStatus(user, MissionStatus.ONGOING ,PageRequest.of(page,10));
+                = matchMissionRepository.findAllByUserAndMissionStatus(user, MissionStatus.ONGOING ,PageRequest.of(page-1,10));
         return matchMissionsPage;
     }
 
@@ -43,7 +43,7 @@ public class UserQueryServiceImpl implements UserQueryService{
                 .orElseThrow(() -> new UserHandler(ErrorStatus.USER_NOT_FOUND));
 
         Page<matchMissions> matchMissionsPage
-                = matchMissionRepository.findAllByUserAndMissionStatus(user, MissionStatus.DONE ,PageRequest.of(page,10));
+                = matchMissionRepository.findAllByUserAndMissionStatus(user, MissionStatus.DONE ,PageRequest.of(page-1,10));
         return matchMissionsPage;
     }
 }

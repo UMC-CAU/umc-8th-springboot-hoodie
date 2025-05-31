@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ import umc.spring.web.dto.UserResponseDTO;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/reviews")
+@Validated
 public class ReviewController {
 
     private final ReviewCommandService reviewService;

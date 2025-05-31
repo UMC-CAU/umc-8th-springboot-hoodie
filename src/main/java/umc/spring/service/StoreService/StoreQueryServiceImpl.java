@@ -47,17 +47,17 @@ public class StoreQueryServiceImpl implements StoreQueryService{
         Store store = storeRepository.findById(StoreId)
                 .orElseThrow(() -> new StoreHandler(ErrorStatus.STORE_NOT_FOUND));
 
-        Page<ReviewPost> StorePage = reviewPostRepository.findAllByStore(store, PageRequest.of(page, 10));
+        Page<ReviewPost> StorePage = reviewPostRepository.findAllByStore(store, PageRequest.of(page-1, 10));
         return StorePage;
     }
 
     @Override
     @Transactional
-    public Page<Missions> getMissionList(Long storeId, Integer page){
+    public Page<Missions> getMissionList(Long storeId,Integer page){
         Store store = storeRepository.findById(storeId)
                 .orElseThrow(() -> new StoreHandler(ErrorStatus.STORE_NOT_FOUND));;
 
-        Page<Missions> missionsPage = missionRepository.findAllByStore(store,PageRequest.of(page,10));
+        Page<Missions> missionsPage = missionRepository.findAllByStore(store,PageRequest.of(page-1,10));
         return missionsPage;
     }
 }

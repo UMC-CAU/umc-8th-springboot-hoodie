@@ -8,8 +8,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import umc.spring.apiPayload.ApiResponse;
 import umc.spring.converter.StoreConverter;
@@ -20,6 +22,7 @@ import umc.spring.domain.Store;
 import umc.spring.service.StoreService.StoreCommandServiceImpl;
 import umc.spring.service.StoreService.StoreQueryServiceImpl;
 import umc.spring.validation.annotation.ValidPage;
+import umc.spring.validation.annotation.convertPage;
 import umc.spring.web.dto.StoreRequestDTO;
 import umc.spring.web.dto.StoreResponseDTO;
 
@@ -28,6 +31,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/stores")
+@Validated
 public class StoreRestController {
 
     private final StoreCommandServiceImpl storeCommandServiceImpl;
@@ -52,7 +56,7 @@ public class StoreRestController {
             @Parameter(name = "storeId", description = "가게의 아이디, path variable 입니다!")
     })
     public ApiResponse<StoreResponseDTO.ReviewPreViewListDTO> getReviewList(
-            @PathVariable(name = "storeId") Long storeId, @RequestParam(name = "page") @umc.spring.validation.annotation.convertPage @ValidPage Integer page){
+            @PathVariable(name = "storeId") Long storeId, @RequestParam(name = "page") @ValidPage Integer page){
         Page<ReviewPost> reviewList = storeQueryServiceimpl.getReviewList(storeId,page);
         return ApiResponse.onSuccess(StoreConverter.reviewPreViewListDTO(reviewList));
     }
@@ -68,7 +72,7 @@ public class StoreRestController {
             @Parameter(name = "missionId", description = "미션의 아이디, path variable 입니다!")
     })
     public ApiResponse<StoreResponseDTO.MissionViewListDTO> getMissionList(
-            @PathVariable(name = "storeId") Long storeId, @RequestParam(name = "page") @umc.spring.validation.annotation.convertPage @ValidPage Integer page){
+            @PathVariable(name = "storeId") Long storeId, @ValidPage @RequestParam(name = "page") Integer page){
         //PAGE 변환시키는 커스텀어노테이션(프론트에서 받은 페이지 번호 - 1),
         // 프론트에서 받은 페이지번호가 1이상인지 검증하는 커스텀어노테이션
         Page<Missions> missionList = storeQueryServiceimpl.getMissionList(storeId,page);

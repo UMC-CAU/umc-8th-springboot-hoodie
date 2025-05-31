@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import umc.spring.apiPayload.ApiResponse;
 import umc.spring.converter.MissionConverter;
@@ -27,6 +28,7 @@ import umc.spring.web.dto.UserResponseDTO;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
+@Validated
 public class UserRestController {
 
     private final UserCommandServiceImpl userCommandServiceImpl;
@@ -69,7 +71,7 @@ public class UserRestController {
     })
     public ApiResponse<MissionResponseDTO.MatchMissionResultListDTO> getDoneMissions(
             @PathVariable(name = "userId") Long userId,
-            @RequestParam(name = "page") @umc.spring.validation.annotation.convertPage @ValidPage Integer page
+            @RequestParam(name = "page") @ValidPage Integer page
     ) {
         Page<matchMissions> doneMissions = userQueryServiceImpl.getDoneMissionList(userId, page);
 
