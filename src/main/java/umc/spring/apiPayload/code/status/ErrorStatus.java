@@ -25,6 +25,8 @@ public enum ErrorStatus implements BaseErrorCode {
     STORE_NOT_FOUND(HttpStatus.BAD_REQUEST, "MEMBER4001", "가게가 없습니다."),
     NICKNAME_NOT_EXIST(HttpStatus.BAD_REQUEST, "MEMBER4002", "닉네임은 필수 입니다."),
     MISSION_NOT_FOUND(HttpStatus.BAD_REQUEST, "MEMBER4001", "해당 미션이 존재하지 않습니다."),
+    INVALID_TOKEN(HttpStatus.BAD_REQUEST,"COMMON400","유효하지 않은 토큰입니다."),
+    INVALID_PASSWORD(HttpStatus.BAD_REQUEST,"COMMON400","유효하지 않은 비밀번호입니다."),
 
 
 

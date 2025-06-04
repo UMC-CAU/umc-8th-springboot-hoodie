@@ -17,18 +17,22 @@ import java.util.stream.Collectors;
 
 public class UserConverter {
 
-    public static UserResponseDTO.JoinResultDTO toJoinResultDTO(User user){
+    public static UserResponseDTO.JoinResultDTO toJoinResultDTO(User user) {
         return UserResponseDTO.JoinResultDTO.builder()
                 .memberId(user.getId())
                 .createdAt(LocalDateTime.now())
                 .build();
     }
 
-    public static User toUser(UserRequestDTO.JoinDto request){
+    public static User toUser(UserRequestDTO.JoinDto request) {
 
         Gender gender = null;
 
-        switch (request.getGender()){
+        if (request.getGender() == null) {
+            throw new IllegalArgumentException("성별 값이 null입니다.");
+        }
+
+        switch (request.getGender()) {
             case 1:
                 gender = Gender.MALE;
                 break;
@@ -50,36 +54,34 @@ public class UserConverter {
         return User.builder()
                 .userAddress(
                         UserAddress.builder()
-                        .name(request.getAddress())
-                        .build())
+                                .name(request.getAddress())
+                                .build())
                 .specAddress(request.getSpecAddress())
                 .gender(gender)
                 .name(request.getName())
                 .matchCategoryList(new ArrayList<>())
                 .birthday(birthDate)
+                .email(request.getEmail())   // 추가된 코드
+                .password(request.getPassword())   // 추가된 코드
+                .role(request.getRole())   // 추가된 코드
                 .build();
     }
 
-//    public static UserResponseDTO.OngoingMissionViewDTO ongoingMissionViewDTO(Missions missions){
-//        return UserResponseDTO.OngoingMissionViewDTO.builder()
-//                .MissionId(missions.getId())
-//                .point(missions.getPoint())
-//                .content(missions.getContent())
-//                .missionSpec(missions.getMission_spec())
-//                .build();
-//    }
-//
-//    public static UserResponseDTO.OngoingMissionViewListDTO ongoingMissionViewListDTO(Page<Missions> missionList){
-//        List<UserResponseDTO.OngoingMissionViewDTO> ongoingMissionViewDTOList = missionList.stream()
-//                .map(UserConverter::ongoingMissionViewDTO).collect(Collectors.toList());
-//
-//        return UserResponseDTO.OngoingMissionViewListDTO.builder()
-//                .isLast(missionList.isLast())
-//                .isFirst(missionList.isFirst())
-//                .totalPage(missionList.getTotalPages())
-//                .totalElements(missionList.getTotalElements())
-//                .listSize(ongoingMissionViewDTOList.size())
-//                .OngoingMissionList(ongoingMissionViewDTOList)
-//                .build();
-//    }
+    public static UserResponseDTO.LoginResultDTO toLoginResultDTO(Long memberId, String accessToken) {
+        return UserResponseDTO.LoginResultDTO.builder()
+                .memberId(memberId)
+                .accessToken(accessToken)
+                .build();
+    }
+
+    public static UserResponseDTO.UserInfoDTO toMemberInfoDTO(User user){
+        return UserResponseDTO.UserInfoDTO.builder()
+                .name(user.getName())
+                .email(user.getEmail())
+                .gender(user.getGender().name())
+                .build();
+    }
+
+
+
 }

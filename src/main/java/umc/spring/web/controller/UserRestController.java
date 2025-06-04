@@ -1,10 +1,13 @@
 package umc.spring.web.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -31,12 +34,12 @@ import umc.spring.web.dto.UserResponseDTO;
 @Validated
 public class UserRestController {
 
-    private final UserCommandServiceImpl userCommandServiceImpl;
-    private final UserQueryServiceImpl userQueryServiceImpl;
+    private final UserCommandService userCommandService;
+    private final UserQueryService userQueryService;
 
-    @PostMapping("/")
+    @PostMapping("/join")
     public ApiResponse<UserResponseDTO.JoinResultDTO> join(@RequestBody @Valid UserRequestDTO.JoinDto request){
-        User user = userCommandServiceImpl.joinUser(request);
+        User user = userCommandService.joinUser(request);
         return ApiResponse.onSuccess(UserConverter.toJoinResultDTO(user));
     }
 
@@ -54,7 +57,7 @@ public class UserRestController {
             @PathVariable(name = "userId") Long userId,
             @RequestParam(name = "page") @umc.spring.validation.annotation.convertPage @ValidPage Integer page
     ) {
-        Page<matchMissions> ongoingMissions = userQueryServiceImpl.getOngoingMissionList(userId, page);
+        Page<matchMissions> ongoingMissions = userQueryService.getOngoingMissionList(userId, page);
 
         return ApiResponse.onSuccess(MissionConverter.matchMissionListDTO(ongoingMissions));
     }
@@ -73,9 +76,24 @@ public class UserRestController {
             @PathVariable(name = "userId") Long userId,
             @RequestParam(name = "page") @ValidPage Integer page
     ) {
-        Page<matchMissions> doneMissions = userQueryServiceImpl.getDoneMissionList(userId, page);
+        Page<matchMissions> doneMissions = userQueryService.getDoneMissionList(userId, page);
 
         return ApiResponse.onSuccess(MissionConverter.matchMissionListDTO(doneMissions));
+    }
+
+    @PostMapping("/login")
+    @Operation(summary = "유저 로그인 API",description = "유저가 로그인하는 API입니다.")
+    public ApiResponse<UserResponseDTO.LoginResultDTO> login(@RequestBody @Valid UserRequestDTO.LoginRequestDTO request) {
+        return ApiResponse.onSuccess(userCommandService.loginMember(request));
+    }
+
+    @GetMapping("/info")
+    @Operation(summary = "유저 내 정보 조회 API - 인증 필요",
+            description = "유저가 내 정보를 조회하는 API입니다.",
+            security = { @SecurityRequirement(name = "JWT TOKEN") }
+    )
+    public ApiResponse<UserResponseDTO.UserInfoDTO> getMyInfo(HttpServletRequest request) {
+        return ApiResponse.onSuccess(userQueryService.getMemberInfo(request));
     }
 
 }

@@ -1,11 +1,13 @@
 package umc.spring.service.UserService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
 import umc.spring.domain.Missions;
 import umc.spring.domain.enums.MissionStatus;
 import umc.spring.domain.mapping.matchMissions;
 import umc.spring.repository.MatchMissionRepository;
 import umc.spring.web.dto.MissionResponseDTO;
+import umc.spring.web.dto.UserResponseDTO;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,5 +17,5 @@ public interface UserQueryService {
 
     Page<matchMissions> getDoneMissionList(Long storeId, Integer page);
 
-
+    UserResponseDTO.UserInfoDTO getMemberInfo(HttpServletRequest request);
 }
