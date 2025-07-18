@@ -2,10 +2,7 @@ package umc.spring.domain.mapping;
 
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.Fetch;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import umc.spring.domain.BaseEntity;
 import umc.spring.domain.Missions;
 import umc.spring.domain.User;
@@ -14,6 +11,7 @@ import umc.spring.domain.enums.MissionStatus;
 import java.time.LocalDate;
 
 @Entity
+@Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

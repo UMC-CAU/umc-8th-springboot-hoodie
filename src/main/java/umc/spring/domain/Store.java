@@ -18,6 +18,11 @@ public class Store extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(columnDefinition = "VARCHAR(50) DEFAULT 'ACTIVE'")
+    private String name;
+
+    private String description;
+
     private LocalTime openTime;
     private LocalTime closeTime;
 
@@ -33,9 +38,9 @@ public class Store extends BaseEntity {
     private Double latitude;
     private Double longitude;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    private FoodCategory foodCategory;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "category_id") // FK로 연결
+    private FoodCategory category;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id")
@@ -43,5 +48,16 @@ public class Store extends BaseEntity {
 
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     private List<ReviewPost> reviewPostList = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Store{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", score=" + scoreAverage +
+                ", region=" + (storeLocation != null ? storeLocation.getName() : "N/A") + // region의 이름 출력
+                '}';
+    }
 
 }

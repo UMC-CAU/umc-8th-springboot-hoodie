@@ -13,6 +13,9 @@ public class Missions extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(columnDefinition = "VARCHAR(50) DEFAULT 'ACTIVE'")
+    private String mission_spec;
+
     @Column(columnDefinition = "VARCHAR(100) DEFAULT 'ACTIVE'")
     private String content;
 

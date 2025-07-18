@@ -15,6 +15,4 @@ public class FoodCategory extends BaseEntity {
 
     @Column(columnDefinition = "VARCHAR(20) DEFAULT 'ACTIVE'")
     private String name;
-
-
 }

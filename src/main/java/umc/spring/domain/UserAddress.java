@@ -16,8 +16,4 @@ public class UserAddress extends BaseEntity {
 
     @Column(columnDefinition = "VARCHAR(50) DEFAULT 'ACTIVE'")
     private String name;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
 }
